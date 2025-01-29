@@ -1,0 +1,49 @@
+services:
+
+  gate_rest_api_1:
+    container_name: ${CONTAINER_NAME:-None}_1
+    image: ${CONTAINER_NAME:-None}:${BRANCH}-${TAG}-${COMMIT_SHORT_SHA}
+    build: .
+    volumes:
+      - "gate_io_log:/usr/src/${CONTAINER_NAME}/log:rw"
+    restart: always
+    hostname: ${CONTAINER_NAME:-None}_1
+    environment:
+      - VERSION=${BRANCH}-${TAG}-${COMMIT_SHORT_SHA}
+      - PORT=${PORT_1}
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+    expose:
+      - ${PORT_1}
+    networks:
+      production:
+        ipv4_address: ${IP_ADDRESS_1}
+
+  gate_rest_api_2:
+    container_name: ${CONTAINER_NAME:-None}_2
+    image: ${CONTAINER_NAME:-None}:${BRANCH}-${TAG}-${COMMIT_SHORT_SHA}
+    build: .
+    volumes:
+      - "gate_io_log:/usr/src/${CONTAINER_NAME}/log:rw"
+    restart: always
+    hostname: ${CONTAINER_NAME:-None}_2
+    environment:
+      - VERSION=${BRANCH}-${TAG}-${COMMIT_SHORT_SHA}
+      - PORT=${PORT_2}
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+    expose:
+      - ${PORT_2}
+    networks:
+      production:
+        ipv4_address: ${IP_ADDRESS_2}
+
+volumes:
+  gate_io_log:
+    external: True
+
+networks:
+  production:
+    external: True
