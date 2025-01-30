@@ -16,7 +16,6 @@ class ProductionConfig(BaseModel):
         + f"{os.environ.get('RABBITMQ_PASS','guest')}@"
         + f"{os.environ.get('RABBITMQ_HOST', '')}",
     }
-    # "url": "amqp://guest:guest@172.100.100.100"}
     api_metadata: str = json.loads(
         open("./data/api_metadata.json", "r", encoding="utf-8").read()
     )
